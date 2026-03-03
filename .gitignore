@@ -1,1 +1,7 @@
-shadow_agent.py
+
+.env
+.venv/
+*.env
+db.sqlite3
+__pycache__/
+
