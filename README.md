@@ -47,3 +47,32 @@ To prove the project's versatility, **Otto-task** is optimized for high-performa
 ---
 "In Otto-task, we don't just sell products. We manage the future of digital exchange."
 
+---
+## 🚀 REPRODUCIBILITY PROTOCOL (JUDGES ONLY)
+To sync with the Shadow Core:
+1. **Clone & Install:**
+   `pip install -r requirements.txt`
+2. **Environment Setup:**
+   Create a `.env` file with your `GOOGLE_API_KEY`.
+3. **Initialize Bunker:**
+   `python manage.py migrate`
+   `python manage.py runserver`
+4. **Live Test:**
+   Ask Shadow: *"Identify item 51 brand and model."*
+   **Expected Result:** Shadow will perform grounding and return "XIOMI A15".
+
+ LIVE DEPLOYMENT (THE BUNKER IS ONLINE)
+The Otto-task // Shadow Core is fully operational and hosted on the cloud. You can access the live interface and interact with the agent at the following secure link:
+🚀 Live HUD: https://otto-market.onrender.com
+
+Hybrid Cloud Architecture:
+> While our Frontend and Django logic are hosted on Render for high-speed delivery, the Intelligence Layer (Shadow) is powered by the Google GenAI SDK, connecting directly to Google's neural infrastructure (Gemma-3-27B). This hybrid setup ensures the bunker is always responsive while maintaining the analytical power of Google’s latest AI models.
+> 
+
+
+
+### 🖼️ MULTIMODAL ASSET MANAGEMENT
+The bunker uses **Cloudinary** as its high-speed visual uplink. 
+- **Dynamic Delivery:** Product images are served via Cloudinary's CDN to ensure zero latency in the Neon HUD.
+- **AI Integration:** Shadow maps database IDs to Cloudinary secure URLs, allowing for future visual analysis and automated marketing video generation.
+

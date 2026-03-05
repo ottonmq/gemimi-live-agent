@@ -1,60 +1,22 @@
-import os
-import django
-import google.generativeai as genai
-from dotenv import load_dotenv
+from google import genai
 
-# 1. CARGA EL ENTORNO DE RENDER (.env)
-load_dotenv()
+# LLAVE MAESTRA
+client = genai.Client(api_key="AIzaSyCh3gVJA1t_wUlz0wwRo2fhDSkkdXRRArg")
 
-# 2. SINCRONIZACIÓN CON TU PROYECTO
-# Usamos 'market.settings' porque tu ROOT_URLCONF dice 'market.urls'
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'market.settings')
-django.setup()
+print("📡 [SISTEMA]: INYECTANDO NÚCLEO GEMMA 3 (BAJA LATENCIA)...")
 
-# 3. IMPORTACIÓN DIRECTA DESDE TU APP
-from marketapp.models import Publicacion
+try:
+    # Gemma 3 es ligero y rara vez da 503
+    response = client.models.generate_content(
+        model="models/gemma-3-27b-it", 
+        contents="Shadow, confirma al Arquitecto Dmfhdilyd que el motor Gemma 3 está vivo."
+    )
 
-# 4. CONFIGURACIÓN DE IA CON TU GOOGLE_API_KEY
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-model = genai.GenerativeModel('gemini-1.5-flash')
+    print("\n" + "—"*45)
+    print(f"✅ [SHADOW GEMMA]: {response.text}")
+    print("—"*45)
+    print("\n🚀 [STATUS]: NÚCLEO INDEPENDIENTE SOLDADO.")
 
-def sistema_shadow():
-    # EL AGENTE SE CONECTA A 'otto-market-db' EN RENDER
-    try:
-        # Traemos solo lo que no está vendido
-        stock_db = Publicacion.objects.filter(vendido=False)
-        
-        # Mapeamos los productos reales de tu base
-        inventario = "\n".join([
-            f"ID: {p.id} | {p.titulo} | {p.marca} | ${p.precio}" 
-            for p in stock_db
-        ])
-
-        print("\n" + "—"*45)
-        print("🦾 [SHADOW_AGENT]: ACCESO A RENDER DB EXITOSO")
-        print(f"📡 BASE: otto-market-db | PRODUCTOS: {stock_db.count()}")
-        print("—"*45)
-
-        while True:
-            orden = input("\n👤 OTTONMQ > ")
-            if orden.lower() in ['salir', 'exit']: break
-
-            # El Agente ahora maneja la data de tu base en Render
-            prompt = f"""
-            Eres Shadow, agente táctico de Otto-task. 
-            Tu base de datos real en Render es:
-            {inventario if inventario else 'Sin productos activos.'}
-            
-            Orden: {orden}
-            Responde breve y con estilo neón.
-            """
-            
-            res = model.generate_content(prompt)
-            print(f"\n🤖 SHADOW > {res.text}")
-
-    except Exception as e:
-        print(f"\n[❌] ERROR DE CONEXIÓN A RENDER DB: {e}")
-
-if __name__ == "__main__":
-    sistema_shadow()
+except Exception as e:
+    print(f"\n💀 [REPORTE FINAL]: {e}")
 
